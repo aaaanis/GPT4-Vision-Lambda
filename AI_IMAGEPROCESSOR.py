@@ -1,7 +1,6 @@
 import json
 from AI_VISION import OpenAIAnalyzer
 
-
 class ImageProcessor:
     def __init__(self, api_key):
         self.analyzer = OpenAIAnalyzer(api_key)
