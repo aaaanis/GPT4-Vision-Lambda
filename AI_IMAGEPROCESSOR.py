@@ -1,7 +1,6 @@
 import json
 
 from image_analyzer import OpenAIAnalyzer
-from image_encoder import ImageEncoder
 
 """
 This module provides a class for processing multiple images by analyzing them using the OpenAI API. It utilizes an image encoder for base64 encoding and an image analyzer for communicating with the OpenAI API.
@@ -11,7 +10,6 @@ Classes:
 
 Dependencies:
     - OpenAIAnalyzer from image_analyzer module: Used to interact with the OpenAI API for image analysis.
-    - [NOT USED] ImageEncoder from image_encoder module: Used for base64 encoding of images. 
 
 ImageProcessor:
     A class that integrates the image encoding and analyzing functionalities to process multiple images.
