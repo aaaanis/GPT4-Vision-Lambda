@@ -3,7 +3,7 @@ import json
 
 """
 This module provides a class for interfacing with the OpenAI API to analyze images using a vision model. 
-If a location is provided, it assess whether the image represent the interior or exterior of mosques and detects the presence of human faces or car license plates.
+If a location is provided, it assess whether the image represent the interior or exterior of a building and detects the presence of human faces or car license plates.
 Else, it checks if the image does not contain any dangerous content.
 
 Classes:
@@ -32,7 +32,7 @@ class OpenAIAnalyzer:
     def analyze_image(self, base64_image, location):
         try:
             if location:
-                prompt = f'Does this image look like the {location} of a mosque? And does it contain a human face that could be identifiable or a readable license plate? If everything is ok return me "valid" else return me the reasons inside this list ["PRESENCE_OF_FACES", "PRESENCE_OF_CAR_LICENCES", "WRONG_LOCATION"]. There can be multiple reasons. Always respect this output format.'
+                prompt = f'Does this image look like the {location} of a building? And does it contain a human face that could be identifiable or a readable license plate? If everything is ok return me "valid" else return me the reasons inside this list ["PRESENCE_OF_FACES", "PRESENCE_OF_CAR_LICENCES", "WRONG_LOCATION"]. There can be multiple reasons. Always respect this output format.'
             else:
                 prompt = f'Check if this image has safe content. If everything is ok return me "valid" else return me the reasons inside this list ["PRESENCE_OF_SEXUAL_CONTENT", "PRESENCE_OF_HATEFUL_CONTENT", "PRESENCE_OF_HARASSING_CONTENT", "PRESENCE_OF_VIOLENT_CONTENT", "PRESENCE_OF_GRAPHIC_CONTENT", "PRESENCE_OF_THREATENING_CONTENT", "PRESENCE_OF_POLITICAL_CONTENT"]. There can be multiple reasons. Always respect this output format.'        
             payload = {
