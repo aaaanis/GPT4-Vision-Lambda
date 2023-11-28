@@ -16,11 +16,11 @@ ImageProcessor:
 
     Methods:
         __init__(api_key): Initializes the ImageProcessor with an API key for the OpenAIAnalyzer.
-        process_image(image_paths, location_type): Processes a list of image paths and analyzes them based on the specified location type ('interior' or 'exterior').
+        process_image(base64_image, location): Processes a list of image paths and analyzes them based on the specified location type ('interior' or 'exterior').
 
             Args:
                 base64_image (str): A base64 encoded string of the image to be analyzed.
-                location_type (str): A string indicating the location type for the analysis ('interior' or 'exterior').
+                location (str): A string indicating the location type for the analysis ('interior' or 'exterior').
 
             Returns:
                 list: A list of dictionaries with the results of the analysis. Each dictionary includes an 'http_status' key indicating the result status (200 for valid, 403 for rejection) and, if applicable, a 'reason' key with details of the rejection.
@@ -38,10 +38,10 @@ class ImageProcessor:
     def __init__(self, api_key):
         self.analyzer = OpenAIAnalyzer(api_key)
 
-    def process_image(self, base64_image, location_type):
+    def process_image(self, base64_image, location):
         results = []
-        analysis_result = self.analyzer.analyze_image(base64_image, location_type)
         try:
+            analysis_result = self.analyzer.analyze_image(base64_image, location)
             text = analysis_result['choices'][0]['message']['content']
 
             if text.strip() == "valid":
