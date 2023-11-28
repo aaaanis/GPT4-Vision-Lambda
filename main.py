@@ -16,7 +16,7 @@ def lambda_handler(event, context):
     - event (dict): Contains the data sent to the Lambda function during invocation.
         Expected keys:
         - 'base64_image': A base64 encoded string of the image to be analyzed.
-        - 'location_type' (optional): A string specifying the context ('interior' or 'exterior') for image analysis.
+        - 'location' (optional): A string specifying the context ('interior' or 'exterior') for image analysis.
     - context: AWS Lambda uses this parameter to provide runtime information to your handler.
 
     Returns:
@@ -41,13 +41,18 @@ def lambda_handler(event, context):
     
     
     try:
-        base64_image = event.get('image')
-        location_type = event.get('location_type', None)
+        body = json.loads(event.get('body'))
+
+        base64_image = body.get('image')
+        if base64_image is None:
+            raise ValueError("No image data provided")
+            
+        location = body.get('location', None)
 
         api_key = os.environ['OPENAI_API_KEY']
         processor = ImageProcessor(api_key)
         
-        result = processor.process_image(base64_image, location_type)
+        result = processor.process_image(base64_image, location)
 
         if result.get('http_status') == 200:
             del result['http_status']
